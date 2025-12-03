@@ -6,6 +6,7 @@ frontend:
         - echo "Starting deployment"
         - echo "Creating uploads directory..."
         - mkdir -p uploads
+        - echo "Creating redirects for double slashes..."
     build:
       commands:
         - echo "Build complete - static site ready"
@@ -15,6 +16,11 @@ frontend:
       - '**/*'
   cache:
     paths: []
+redirects:
+  - source: '/<*>'
+    target: '/index.html'
+    status: '200'
+    condition: null
 customHeaders:
   - pattern: '**/*'
     headers:

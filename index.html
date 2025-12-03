@@ -27,6 +27,29 @@
         if (!window.location.hash || window.location.hash === '#/' || window.location.hash === '#') {
             window.location.href = '#/project/flexlogv3';
         }
+        
+        // Fix double slashes in URLs
+        (function() {
+            var originalOpen = XMLHttpRequest.prototype.open;
+            XMLHttpRequest.prototype.open = function(method, url) {
+                // Fix double slashes in plugin/theme paths
+                if (typeof url === 'string') {
+                    url = url.replace(/([^:]\/)\/+/g, '$1');
+                }
+                return originalOpen.apply(this, arguments);
+            };
+            
+            // Also fix fetch if used
+            if (window.fetch) {
+                var originalFetch = window.fetch;
+                window.fetch = function(url, options) {
+                    if (typeof url === 'string') {
+                        url = url.replace(/([^:]\/)\/+/g, '$1');
+                    }
+                    return originalFetch.call(this, url, options);
+                };
+            }
+        })();
     </script>
     <!-- <script type="text/javascript" src="newrelic.browser.js"></script> -->
     <link rel="manifest" href="manifest.json">
