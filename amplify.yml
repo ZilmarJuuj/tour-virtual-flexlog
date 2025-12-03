@@ -4,13 +4,11 @@ frontend:
     preBuild:
       commands:
         - echo "Starting deployment"
-        - echo "Downloading images from S3..."
-        - aws s3 sync "s3://skylineip/Tour Virtual/ancora/lapentor/uploads/" ./uploads/ --quiet
-        - echo "Images downloaded successfully"
+        - echo "Creating uploads directory..."
+        - mkdir -p uploads
     build:
       commands:
         - echo "Build complete - static site ready"
-        - ls -la uploads/ | head -20
   artifacts:
     baseDirectory: /
     files:
