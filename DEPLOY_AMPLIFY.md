@@ -1,104 +1,94 @@
-# Deploy no AWS Amplify
+# Deploy no AWS Amplify - Tour Virtual FlexLog
 
-## Passo 1: Preparar o Repositório Git
+## ✅ Repositório GitHub Configurado
+https://github.com/ZilmarJuuj/tour-virtual-flexlog
 
-Se ainda não tem um repositório Git, crie um:
+## 🚀 Como fazer deploy de alterações
+
+Agora que está conectado ao GitHub, qualquer alteração é automática:
 
 ```bash
-git init
 git add .
-git commit -m "Initial commit"
+git commit -m "Descrição das alterações"
+git push
 ```
 
-Depois, envie para GitHub, GitLab ou Bitbucket:
+O Amplify detecta automaticamente e faz o deploy!
+
+## 📁 Estrutura do Projeto
+
+- `amplify.yml` - Configuração do build do Amplify
+- `index.html` - Página principal da plataforma Lapentor
+- `tour.html` - Página do tour virtual
+- `db.json` - Dados das cenas do tour
+- `assets/` - CSS, imagens e favicons
+- `dist/` - JavaScript compilado (vendors1.min.js, scripts.js)
+- `modules/` - Módulos da plataforma (lapentor.app, lapentor.marketplace)
+- `bower_components/krpano/` - Engine do tour 360°
+- `vrcore/` - Arquivos core do VR
+
+## 🚫 Arquivos Ignorados (.gitignore)
+
+Estes arquivos NÃO vão para o Git:
+- `uploads/` - Arquivos gerados pelo usuário
+- `*.zip` - Arquivos de deploy
+- `*.ps1` - Scripts PowerShell
+- `temp-check/` - Pasta temporária
+- `node_modules/` - Dependências
+
+## 🔧 Troubleshooting
+
+### Erros 404 nos arquivos CSS/JS
+1. Verifique os logs de build no Amplify Console
+2. Confirme que todos os arquivos foram commitados no Git
+3. Limpe o cache do navegador (Ctrl + Shift + Delete)
+4. Verifique se o `amplify.yml` tem o `baseDirectory` correto
+
+### Build falhou
+1. Veja os logs no Amplify Console
+2. Verifique se o `amplify.yml` está na raiz do projeto
+3. Confirme que não há erros de sintaxe no YAML
+
+### Arquivos não aparecem
+1. Verifique se não estão no `.gitignore`
+2. Confirme que foram commitados: `git status`
+3. Force um novo deploy no Amplify Console
+
+## 📝 Comandos Git Úteis
 
 ```bash
-# Exemplo GitHub
-git remote add origin https://github.com/seu-usuario/seu-repo.git
-git branch -M main
-git push -u origin main
+# Ver status dos arquivos
+git status
+
+# Ver histórico de commits
+git log --oneline
+
+# Desfazer alterações não commitadas
+git checkout -- arquivo.html
+
+# Criar nova branch para testar
+git checkout -b teste
+git push -u origin teste
+
+# Voltar para main
+git checkout main
 ```
 
-## Passo 2: Criar App no AWS Amplify
+## 🌐 URLs do Projeto
 
-1. Acesse o console AWS: https://console.aws.amazon.com/amplify/
-2. Clique em **"New app"** → **"Host web app"**
-3. Escolha seu provedor Git (GitHub, GitLab, Bitbucket, etc.)
-4. Autorize o acesso ao seu repositório
-5. Selecione o repositório e branch (main/master)
+- **Repositório**: https://github.com/ZilmarJuuj/tour-virtual-flexlog
+- **Amplify Console**: https://console.aws.amazon.com/amplify/
+- **URL do Site**: Será gerada após o deploy (formato: `https://main.xxxxx.amplifyapp.com`)
 
-## Passo 3: Configurar Build Settings
+## 💰 Custos AWS Amplify
 
-O Amplify vai detectar automaticamente o arquivo `amplify.yml` criado.
+- **Grátis**: 1000 minutos de build/mês + 15GB armazenamento + 15GB transferência
+- **Depois**: ~$0.01/min build, $0.023/GB armazenado, $0.15/GB transferido
 
-**Configurações importantes:**
-- **App name**: Escolha um nome para sua aplicação
-- **Environment**: production (ou outro nome)
-- **Build settings**: Já configurado no amplify.yml
+## 🔐 Domínio Customizado (Futuro)
 
-## Passo 4: Configurar Rewrites (Importante para SPA)
-
-Após o deploy inicial, configure as regras de redirecionamento:
-
-1. No console do Amplify, vá em **"Rewrites and redirects"**
-2. Adicione esta regra:
-
-```
-Source: </^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json|html)$)([^.]+$)/>
-Target: /index.html
-Type: 200 (Rewrite)
-```
-
-Ou use a regra simples:
-```
-Source: /<*>
-Target: /index.html
-Type: 404 (Redirect)
-```
-
-## Passo 5: Deploy
-
-O Amplify vai fazer o deploy automaticamente!
-
-- Cada push no branch configurado dispara um novo deploy
-- Você pode ver os logs em tempo real
-- URL gerada automaticamente: `https://[branch].[app-id].amplifyapp.com`
-
-## Passo 6: Domínio Customizado (Opcional)
-
-1. Vá em **"Domain management"**
-2. Clique em **"Add domain"**
-3. Configure seu domínio (Route 53 ou externo)
-4. O Amplify configura HTTPS automaticamente
-
-## Deploy Manual (Alternativa sem Git)
-
-Se não quiser usar Git, você pode fazer deploy manual:
-
-1. No console Amplify, escolha **"Deploy without Git provider"**
-2. Faça upload de um arquivo ZIP com todos os arquivos
-3. O Amplify vai hospedar os arquivos
-
-Para criar o ZIP:
-```bash
-# Windows (PowerShell)
-Compress-Archive -Path * -DestinationPath deploy.zip
-
-# Ou use o explorador de arquivos para criar o ZIP
-```
-
-## Variáveis de Ambiente (Se necessário)
-
-Se precisar configurar variáveis:
-1. Vá em **"Environment variables"**
-2. Adicione as variáveis necessárias
-
-## Custos
-
-- **Grátis**: 1000 minutos de build/mês + 15GB de armazenamento + 15GB de transferência
-- Depois: ~$0.01 por minuto de build, $0.023/GB armazenado, $0.15/GB transferido
-
-## Monitoramento
-
-- Acesse **"Monitoring"** no console para ver métricas
-- Logs de build disponíveis em cada deploy
+Quando quiser adicionar um domínio próprio:
+1. No Amplify Console → "Domain management"
+2. Adicione seu domínio
+3. Configure DNS (Route 53 ou externo)
+4. HTTPS configurado automaticamente
