@@ -26,5 +26,5 @@ temp-check/
 # Arquivos desnecessarios
 deploy-limpo.zip
 
-# Uploads (baixados do S3 durante build)
-uploads/
+# Uploads (incluídos no Git temporariamente até configurar S3)
+# uploads/
