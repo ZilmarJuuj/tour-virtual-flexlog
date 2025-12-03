@@ -1,2 +1,0 @@
-# Redirect uploads to S3
-/uploads/* https://skylineip.s3.amazonaws.com/Tour%20Virtual/ancora/lapentor/uploads/:splat 200
