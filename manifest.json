@@ -1,0 +1,7 @@
+{
+    "short_name": "Lapentor",
+    "name": "Lapentor",
+    "icons": [],
+    "start_url": "/index.html",
+    "display": "standalone"
+}

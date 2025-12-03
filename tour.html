@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>FlexLog - Tour Virtual</title>
+    <style>
+        * { margin: 0; padding: 0; }
+        html, body { width: 100%; height: 100%; overflow: hidden; }
+        #pano { width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <div id="pano"></div>
+    
+    <script src="bower_components/krpano/lapentor_krpano.js"></script>
+    <script src="config.js"></script>
+    <script>
+        // Carrega os dados do tour
+        fetch('db.json')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Tour data loaded:', data);
+                // Inicializa o krpano com a primeira cena
+                if (data.scenes && data.scenes.length > 0) {
+                    const firstScene = data.scenes[0];
+                    embedpano({
+                        xml: firstScene.xml,
+                        target: "pano",
+                        html5: "auto",
+                        mobilescale: 1.0,
+                        passQueryParameters: true
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao carregar tour:', error);
+                document.getElementById('pano').innerHTML = '<div style="padding: 20px; font-family: Arial;">Erro ao carregar o tour virtual. Verifique o console para mais detalhes.</div>';
+            });
+    </script>
+</body>
+</html>

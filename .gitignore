@@ -1,0 +1,30 @@
+# Arquivos de sistema
+._*
+.DS_Store
+Thumbs.db
+
+# Node modules (se houver)
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+
+# Amplify
+amplify/
+.amplify/
+
+# Scripts e arquivos temporarios
+*.ps1
+*.zip
+temp-check/
+
+# Arquivos desnecessarios
+deploy-limpo.zip
+
+# Uploads (arquivos gerados)
+uploads/
